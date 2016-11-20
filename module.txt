@@ -1,0 +1,21 @@
+{
+    "id" : "EdibleSubstance",
+    "version" : "1.0.0-SNAPSHOT",
+    "author" : "Josharias",
+    "displayName" : "EdibleSubstance",
+    "description" : "Allows substances to be tagged as edible and consumed",
+    "dependencies" : [
+         {
+             "id": "SubstanceMatters", "minVersion": "1.0.0"
+         },
+         {
+             "id": "Hunger", "minVersion": "1.0.0"
+         },
+         {
+             "id": "Thirst", "minVersion": "1.0.0"
+         },
+         {
+             "id": "Fluid", "minVersion": "1.0.0"
+         }
+     ]
+}
