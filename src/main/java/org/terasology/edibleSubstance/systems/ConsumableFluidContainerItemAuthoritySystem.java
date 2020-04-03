@@ -29,15 +29,27 @@ import org.terasology.fluid.component.FluidContainerItemComponent;
 import org.terasology.fluid.system.FluidUtils;
 import org.terasology.hunger.component.FoodComponent;
 import org.terasology.hunger.event.FoodConsumedEvent;
+import org.terasology.logic.common.ActivateEvent;
 import org.terasology.logic.inventory.ItemComponent;
+import org.terasology.math.geom.Vector3i;
 import org.terasology.registry.In;
 import org.terasology.thirst.component.DrinkComponent;
 import org.terasology.thirst.event.DrinkConsumedEvent;
+import org.terasology.world.WorldProvider;
+import org.terasology.world.block.Block;
+import org.terasology.input.cameraTarget.CameraTargetSystem;
+
+
+
 
 @RegisterSystem(RegisterMode.AUTHORITY)
 public class ConsumableFluidContainerItemAuthoritySystem extends BaseComponentSystem {
     @In
     PrefabManager prefabManager;
+    @In
+    CameraTargetSystem cameraTargetSystem;
+    @In
+    private WorldProvider worldProvider;
 
     @ReceiveEvent(components = {ItemComponent.class})
     public void eatFluidContainerItem(FoodConsumedEvent event, EntityRef item,
@@ -90,34 +102,26 @@ public class ConsumableFluidContainerItemAuthoritySystem extends BaseComponentSy
 
 
     @ReceiveEvent(components = {ItemComponent.class})
-    public void fillContainerWithDrinkSubstance(OnChangedComponent onChangedComponent, EntityRef item,
+    public void fillContainerWithDrinkSubstance(ActivateEvent event, EntityRef item,
                                                 FluidContainerItemComponent fluidContainer,
                                                 ConsumableFluidContainerItemComponent consumableFluidContainerItemComponent) {
-        Prefab fluidSubstance = prefabManager.getPrefab(fluidContainer.fluidType);
-        // only allow a drink component if there is a valid substance
-        if (fluidSubstance != null) {
-            // get the drink component from the substance
-            DrinkComponent substanceDrinkComponent = fluidSubstance.getComponent(DrinkComponent.class);
-            if (substanceDrinkComponent != null) {
-                // there is a valid drink on this substance
-
+        Vector3i blockPosition = cameraTargetSystem.getTargetBlockPosition();
+        Block block = worldProvider.getBlock(blockPosition);
+        if(block.isWater())   {
                 // create a new drink component to put on this item
                 DrinkComponent itemDrinkComponent = item.getComponent(DrinkComponent.class);
                 if (itemDrinkComponent == null) {
                     itemDrinkComponent = new DrinkComponent();
                 }
 
-                // set the volume corrected amount of drink for this container
-                itemDrinkComponent.filling = substanceDrinkComponent.filling * fluidContainer.volume;
+                // set the volume corrected amount of drink for this container- divide by 1000 to convert into l then scale it to 100, hence /10
+                itemDrinkComponent.filling = (fluidContainer.maxVolume)/10;
 
                 // save the item's drink component
                 item.addOrSaveComponent(itemDrinkComponent);
                 return;
-            }
         }
-
         // as a fallback,  remove any drink component from this item that should not be present
         item.removeComponent(DrinkComponent.class);
-    }
-
+     }
 }
