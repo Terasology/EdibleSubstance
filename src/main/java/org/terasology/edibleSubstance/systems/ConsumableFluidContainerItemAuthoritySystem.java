@@ -31,13 +31,12 @@ import org.terasology.hunger.component.FoodComponent;
 import org.terasology.hunger.event.FoodConsumedEvent;
 import org.terasology.logic.common.ActivateEvent;
 import org.terasology.logic.inventory.ItemComponent;
-import org.terasology.math.geom.Vector3i;
+import org.terasology.math.geom.Vector3f;
 import org.terasology.registry.In;
 import org.terasology.thirst.component.DrinkComponent;
 import org.terasology.thirst.event.DrinkConsumedEvent;
 import org.terasology.world.WorldProvider;
 import org.terasology.world.block.Block;
-import org.terasology.input.cameraTarget.CameraTargetSystem;
 
 
 
@@ -46,8 +45,6 @@ import org.terasology.input.cameraTarget.CameraTargetSystem;
 public class ConsumableFluidContainerItemAuthoritySystem extends BaseComponentSystem {
     @In
     PrefabManager prefabManager;
-    @In
-    CameraTargetSystem cameraTargetSystem;
     @In
     private WorldProvider worldProvider;
 
@@ -101,27 +98,32 @@ public class ConsumableFluidContainerItemAuthoritySystem extends BaseComponentSy
     }
 
 
-    @ReceiveEvent(components = {ItemComponent.class})
+   @ReceiveEvent(components = {ItemComponent.class})
     public void fillContainerWithDrinkSubstance(ActivateEvent event, EntityRef item,
                                                 FluidContainerItemComponent fluidContainer,
                                                 ConsumableFluidContainerItemComponent consumableFluidContainerItemComponent) {
-        Vector3i blockPosition = cameraTargetSystem.getTargetBlockPosition();
-        Block block = worldProvider.getBlock(blockPosition);
-        if(block.isWater())   {
-                // create a new drink component to put on this item
-                DrinkComponent itemDrinkComponent = item.getComponent(DrinkComponent.class);
-                if (itemDrinkComponent == null) {
-                    itemDrinkComponent = new DrinkComponent();
-                }
+       Vector3f location = event.getInstigatorLocation();
+       Vector3f direction = new Vector3f(event.getDirection());
+       direction.normalize();
+       direction.scale((float) 1.5);
+       location.add(direction);
+       Block block = worldProvider.getBlock(location);
+       if(block.isWater())   {
+           // create a new drink component to put on this item
+           DrinkComponent itemDrinkComponent = item.getComponent(DrinkComponent.class);
+           if (itemDrinkComponent == null) {
+               itemDrinkComponent = new DrinkComponent();
+           }
 
-                // set the volume corrected amount of drink for this container- divide by 1000 to convert into l then scale it to 100, hence /10
-                itemDrinkComponent.filling = (fluidContainer.maxVolume)/10;
+           // set the volume corrected amount of drink for this container- divide by 1000 to convert into l then scale it to 100, hence /10
+           itemDrinkComponent.filling = (fluidContainer.maxVolume)/10;
 
-                // save the item's drink component
-                item.addOrSaveComponent(itemDrinkComponent);
-                return;
-        }
-        // as a fallback,  remove any drink component from this item that should not be present
-        item.removeComponent(DrinkComponent.class);
-     }
+           // save the item's drink component
+           item.addOrSaveComponent(itemDrinkComponent);
+           return;
+       }
+       // as a fallback,  remove any drink component from this item that should not be present
+       item.removeComponent(DrinkComponent.class);
+    }
 }
+
