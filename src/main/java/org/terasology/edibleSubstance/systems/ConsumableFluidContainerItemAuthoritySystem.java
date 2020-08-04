@@ -26,6 +26,7 @@ import org.terasology.entitySystem.systems.BaseComponentSystem;
 import org.terasology.entitySystem.systems.RegisterMode;
 import org.terasology.entitySystem.systems.RegisterSystem;
 import org.terasology.fluid.component.FluidContainerItemComponent;
+import org.terasology.fluid.system.FluidRegistry;
 import org.terasology.fluid.system.FluidUtils;
 import org.terasology.hunger.component.FoodComponent;
 import org.terasology.hunger.event.FoodConsumedEvent;
@@ -36,6 +37,8 @@ import org.terasology.thirst.event.DrinkConsumedEvent;
 
 @RegisterSystem(RegisterMode.AUTHORITY)
 public class ConsumableFluidContainerItemAuthoritySystem extends BaseComponentSystem {
+    @In
+    FluidRegistry fluidRegistry;
     @In
     PrefabManager prefabManager;
 
@@ -52,7 +55,7 @@ public class ConsumableFluidContainerItemAuthoritySystem extends BaseComponentSy
     public void fillContainerWithFoodSubstance(OnChangedComponent onChangedComponent, EntityRef item,
                                                FluidContainerItemComponent fluidContainer,
                                                ConsumableFluidContainerItemComponent consumableFluidContainerItemComponent) {
-        Prefab fluidSubstance = prefabManager.getPrefab(fluidContainer.fluidType);
+        Prefab fluidSubstance = fluidRegistry.getPrefab(fluidContainer.fluidType);
         // only allow a food component if there is a valid substance
         if (fluidSubstance != null) {
             // get the food component from the substance
@@ -93,7 +96,7 @@ public class ConsumableFluidContainerItemAuthoritySystem extends BaseComponentSy
     public void fillContainerWithDrinkSubstance(OnChangedComponent onChangedComponent, EntityRef item,
                                                 FluidContainerItemComponent fluidContainer,
                                                 ConsumableFluidContainerItemComponent consumableFluidContainerItemComponent) {
-        Prefab fluidSubstance = prefabManager.getPrefab(fluidContainer.fluidType);
+        Prefab fluidSubstance = fluidRegistry.getPrefab(fluidContainer.fluidType);
         // only allow a drink component if there is a valid substance
         if (fluidSubstance != null) {
             // get the drink component from the substance
