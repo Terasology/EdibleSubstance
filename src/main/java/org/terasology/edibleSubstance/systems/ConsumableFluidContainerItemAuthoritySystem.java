@@ -33,6 +33,8 @@ import org.terasology.logic.inventory.ItemComponent;
 import org.terasology.registry.In;
 import org.terasology.thirst.component.DrinkComponent;
 import org.terasology.thirst.event.DrinkConsumedEvent;
+import org.terasology.utilities.modifiable.ModifiableValue;
+
 
 @RegisterSystem(RegisterMode.AUTHORITY)
 public class ConsumableFluidContainerItemAuthoritySystem extends BaseComponentSystem {
@@ -67,7 +69,7 @@ public class ConsumableFluidContainerItemAuthoritySystem extends BaseComponentSy
                 }
 
                 // set the volume corrected amount of food for this container
-                itemFoodComponent.filling = substanceFoodComponent.filling * fluidContainer.volume;
+                itemFoodComponent.filling = new ModifiableValue(substanceFoodComponent.filling.getValue() * fluidContainer.volume);
 
                 // save the item's food component
                 item.addOrSaveComponent(itemFoodComponent);
