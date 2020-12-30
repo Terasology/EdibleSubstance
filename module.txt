@@ -1,14 +1,26 @@
 {
-    "id": "EdibleSubstance",
-    "version": "1.0.0",
-    "author": "Josharias",
-    "displayName": "EdibleSubstance",
-    "description": "Allows substances to be tagged as edible and consumed",
-    "dependencies": [
-         { "id": "Fluid", "minVersion": "2.0.0" },
-         { "id": "Hunger", "minVersion": "1.1.0" },
-         { "id": "SubstanceMatters", "minVersion": "2.0.0" },
-         { "id": "Thirst", "minVersion": "1.0.0" }
-     ],
-     "isLibrary": true
+  "id": "EdibleSubstance",
+  "version": "1.1.0-SNAPSHOT",
+  "author": "Josharias",
+  "displayName": "EdibleSubstance",
+  "description": "Allows substances to be tagged as edible and consumed",
+  "dependencies": [
+    {
+      "id": "Fluid",
+      "minVersion": "2.0.0"
+    },
+    {
+      "id": "Hunger",
+      "minVersion": "1.1.0"
+    },
+    {
+      "id": "SubstanceMatters",
+      "minVersion": "2.0.0"
+    },
+    {
+      "id": "Thirst",
+      "minVersion": "1.0.0"
+    }
+  ],
+  "isLibrary": true
 }
