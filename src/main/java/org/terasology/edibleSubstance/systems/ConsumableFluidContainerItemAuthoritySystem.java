@@ -17,24 +17,24 @@ package org.terasology.edibleSubstance.systems;
 
 import com.google.common.base.Strings;
 import org.terasology.edibleSubstance.components.ConsumableFluidContainerItemComponent;
-import org.terasology.entitySystem.entity.EntityRef;
-import org.terasology.entitySystem.entity.lifecycleEvents.OnChangedComponent;
-import org.terasology.entitySystem.event.ReceiveEvent;
-import org.terasology.entitySystem.prefab.Prefab;
-import org.terasology.entitySystem.prefab.PrefabManager;
-import org.terasology.entitySystem.systems.BaseComponentSystem;
-import org.terasology.entitySystem.systems.RegisterMode;
-import org.terasology.entitySystem.systems.RegisterSystem;
+import org.terasology.engine.entitySystem.entity.EntityRef;
+import org.terasology.engine.entitySystem.entity.lifecycleEvents.OnChangedComponent;
+import org.terasology.engine.entitySystem.event.ReceiveEvent;
+import org.terasology.engine.entitySystem.prefab.Prefab;
+import org.terasology.engine.entitySystem.prefab.PrefabManager;
+import org.terasology.engine.entitySystem.systems.BaseComponentSystem;
+import org.terasology.engine.entitySystem.systems.RegisterMode;
+import org.terasology.engine.entitySystem.systems.RegisterSystem;
+import org.terasology.engine.logic.inventory.ItemComponent;
+import org.terasology.engine.registry.In;
+import org.terasology.engine.utilities.modifiable.ModifiableValue;
 import org.terasology.fluid.component.FluidContainerItemComponent;
 import org.terasology.fluid.system.FluidRegistry;
 import org.terasology.fluid.system.FluidUtils;
 import org.terasology.hunger.component.FoodComponent;
 import org.terasology.hunger.event.FoodConsumedEvent;
-import org.terasology.logic.inventory.ItemComponent;
-import org.terasology.registry.In;
 import org.terasology.thirst.component.DrinkComponent;
 import org.terasology.thirst.event.DrinkConsumedEvent;
-import org.terasology.utilities.modifiable.ModifiableValue;
 
 
 @RegisterSystem(RegisterMode.AUTHORITY)
