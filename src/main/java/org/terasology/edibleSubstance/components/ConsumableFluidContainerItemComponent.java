@@ -5,4 +5,8 @@ package org.terasology.edibleSubstance.components;
 import org.terasology.gestalt.entitysystem.component.Component;
 
 public class ConsumableFluidContainerItemComponent implements Component<ConsumableFluidContainerItemComponent> {
+    @Override
+    public void copy(ConsumableFluidContainerItemComponent other) {
+
+    }
 }
