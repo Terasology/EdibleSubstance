@@ -6,7 +6,7 @@ import org.terasology.gestalt.entitysystem.component.Component;
 
 public class ConsumableFluidContainerItemComponent implements Component<ConsumableFluidContainerItemComponent> {
     @Override
-    public void copy(ConsumableFluidContainerItemComponent other) {
+    public void copyFrom(ConsumableFluidContainerItemComponent other) {
 
     }
 }
