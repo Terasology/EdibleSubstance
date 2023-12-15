@@ -2,11 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 package org.terasology.edibleSubstance.components;
 
-import org.terasology.gestalt.entitysystem.component.Component;
+import org.terasology.gestalt.entitysystem.component.EmptyComponent;
 
-public class ConsumableFluidContainerItemComponent implements Component<ConsumableFluidContainerItemComponent> {
-    @Override
-    public void copyFrom(ConsumableFluidContainerItemComponent other) {
-
-    }
+public class ConsumableFluidContainerItemComponent extends EmptyComponent<ConsumableFluidContainerItemComponent> {
 }
